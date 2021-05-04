@@ -8,10 +8,16 @@ const setToken = (newToken) => {
 };
 
 const getAll = async () => {
-  const config = { headers: { Authorization: token } };
-  const reponse = await axios.get(baseUrl, config);
+  const reponse = await axios.get(baseUrl);
 
   return reponse.data;
 };
 
-export default { getAll, setToken };
+const postBlog = async (blog) => {
+  const config = { headers: { Authorization: token } };
+  const response = await axios.post(baseUrl, blog, config);
+
+  return response.data;
+};
+
+export default { getAll, postBlog, setToken };

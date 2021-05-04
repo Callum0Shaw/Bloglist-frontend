@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import AddBlog from "./components/AddBlog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
+  const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -20,13 +24,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedUser")
+    const loggedUserJSON = window.localStorage.getItem("loggedUser");
     if (loggedUserJSON) {
-      const currentUser = JSON.parse(loggedUserJSON)
-      setUser(currentUser)
-      blogService.setToken(currentUser.token)
+      const currentUser = JSON.parse(loggedUserJSON);
+      setUser(currentUser);
+      blogService.setToken(currentUser.token);
     }
-  }, [])
+  }, []);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -43,6 +47,19 @@ const App = () => {
     }
   };
 
+  const createBlog = (event) => {
+    event.preventDefault();
+    const blog = {
+      title: title,
+      author: author,
+      url: url,
+    };
+    const submittedBlog = async () => await blogService.postBlog(blog);
+    submittedBlog();
+    setTitle("");
+    setAuthor("");
+    setUrl("");
+  };
 
   if (user === null) {
     return (
@@ -62,7 +79,16 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Logout name={user.name}/>
+      <Logout name={user.name} />
+      <AddBlog
+        title={title}
+        setTitle={setTitle}
+        author={author}
+        setAuthor={setAuthor}
+        url={url}
+        setUrl={setUrl}
+        createBlog={createBlog}
+      />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
