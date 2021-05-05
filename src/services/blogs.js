@@ -20,4 +20,6 @@ const postBlog = async (blog) => {
   return response.data;
 };
 
-export default { getAll, postBlog, setToken };
+const toExport = { getAll, postBlog, setToken };
+
+export default toExport;

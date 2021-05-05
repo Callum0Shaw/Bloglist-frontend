@@ -3,6 +3,7 @@ import Blog from "./components/Blog";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import AddBlog from "./components/AddBlog";
+import Notification from "./components/Notification";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -14,6 +15,7 @@ const App = () => {
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
   const [blogs, setBlogs] = useState([]);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -43,7 +45,12 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (error) {
-      alert("Wrong login details");
+      setMessage("Wrong username or password");
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      setUsername("");
+      setPassword("");
     }
   };
 
@@ -56,6 +63,10 @@ const App = () => {
     };
     const submittedBlog = async () => await blogService.postBlog(blog);
     submittedBlog();
+    setMessage(`Blog: ${title} by ${author} added`);
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
     setTitle("");
     setAuthor("");
     setUrl("");
@@ -65,6 +76,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={message} />
         <Login
           username={username}
           setUsername={setUsername}
@@ -79,6 +91,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={message} />
       <Logout name={user.name} />
       <AddBlog
         title={title}
