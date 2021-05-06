@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
-import Login from "./components/Login";
+import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
-import AddBlog from "./components/AddBlog";
+import AddBlog from "./components/BlogForm";
 import Notification from "./components/Notification";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import Togglable from "./components/Togglable";
 
 const App = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState("");
+
+  const blogFormRef = useRef();
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -34,42 +32,29 @@ const App = () => {
     }
   }, []);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    console.log("Logging in with ", username, password);
+  const loginUser = async (user) => {
     try {
-      const currentUser = await loginService.login({ username, password });
+      const currentUser = await loginService.login(user);
       window.localStorage.setItem("loggedUser", JSON.stringify(currentUser));
       blogService.setToken(currentUser.token);
       setUser(currentUser);
-      setUsername("");
-      setPassword("");
     } catch (error) {
       setMessage("Wrong username or password");
       setTimeout(() => {
         setMessage(null);
       }, 5000);
-      setUsername("");
-      setPassword("");
     }
   };
 
-  const createBlog = (event) => {
-    event.preventDefault();
-    const blog = {
-      title: title,
-      author: author,
-      url: url,
-    };
+  const postBlog = (blog) => {
+    blogFormRef.current.toggleVisibility();
     const submittedBlog = async () => await blogService.postBlog(blog);
     submittedBlog();
-    setMessage(`Blog: ${title} by ${author} added`);
+    setMessage(`Blog: ${blog.title} by ${blog.author} added`);
     setTimeout(() => {
       setMessage(null);
     }, 5000);
-    setTitle("");
-    setAuthor("");
-    setUrl("");
+    setBlogs(blogs.concat(blog));
   };
 
   if (user === null) {
@@ -77,13 +62,7 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         <Notification message={message} />
-        <Login
-          username={username}
-          setUsername={setUsername}
-          password={password}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-        />
+        <LoginForm loginUser={loginUser} />
       </div>
     );
   }
@@ -93,15 +72,10 @@ const App = () => {
       <h2>blogs</h2>
       <Notification message={message} />
       <Logout name={user.name} />
-      <AddBlog
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        url={url}
-        setUrl={setUrl}
-        createBlog={createBlog}
-      />
+      <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+        <AddBlog postBlog={postBlog} />
+      </Togglable>
+
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
