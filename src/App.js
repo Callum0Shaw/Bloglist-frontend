@@ -46,10 +46,10 @@ const App = () => {
     }
   };
 
-  const postBlog = (blog) => {
+  const postBlog = async (blog) => {
     blogFormRef.current.toggleVisibility();
-    const submittedBlog = async () => await blogService.postBlog(blog);
-    submittedBlog();
+    const submittedBlog = await blogService.postBlog(blog);
+    console.log(submittedBlog);
     setMessage(`Blog: ${blog.title} by ${blog.author} added`);
     setTimeout(() => {
       setMessage(null);
