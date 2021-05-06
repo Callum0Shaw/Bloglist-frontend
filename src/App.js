@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const newBlogs = await blogService.getAll();
-      setBlogs(newBlogs);
+      setBlogs(sortBlogs(newBlogs));
     };
     fetchBlogs();
   }, []);
@@ -53,7 +53,7 @@ const App = () => {
     setTimeout(() => {
       setMessage(null);
     }, 5000);
-    setBlogs(blogs.concat(blog));
+    setBlogs(blogs.concat(submittedBlog));
   };
 
   const likeBlog = async (blog) => {
@@ -62,7 +62,31 @@ const App = () => {
     setTimeout(() => {
       setMessage(null);
     }, 5000);
-    setBlogs(blogs.map((blog) => blog.id === likedBlog.id ? {...blog, likes: blog.likes + 1} : blog))
+    const updatedBlogs = blogs.map((blog) =>
+      blog.id === likedBlog.id ? { ...blog, likes: blog.likes + 1 } : blog
+    );
+    setBlogs(sortBlogs(updatedBlogs));
+  };
+
+  const sortBlogs = (array) => {
+    const sortedBlogs = array.sort((a, b) => (a.likes > b.likes ? -1 : 1));
+    return sortedBlogs;
+  };
+
+  const deleteBlog = async (blog) => {
+    try {
+      const deletedBlog = await blogService.deleteBlog(blog);
+      setMessage(`You have deleted:  ${blog.title} by ${blog.author}`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      setBlogs(blogs.filter((b) => b.id !== blog.id));
+    } catch (error) {
+      setMessage("You do not have permission to delete this blog");
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
   };
 
   if (user === null) {
@@ -85,7 +109,13 @@ const App = () => {
       </Togglable>
 
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          likeBlog={likeBlog}
+          deleteBlog={deleteBlog}
+          user={user}
+        />
       ))}
     </div>
   );

@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import "./blogs.css"
 
-const Blog = ({ blog, likeBlog }) => {
+const Blog = ({ blog, likeBlog, deleteBlog, user })=> {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const addLike = () => {
+  const handleAddLike = () => {
     likeBlog(blog)
+  }
+
+  const handleDelete = () => {
+    deleteBlog(blog)
   }
 
   if (!isExpanded) {
     return (
       <div className="minimisedBlog">
         <div className="blogItem">
-          {blog.title} {blog.author}
+          {blog.title} by {blog.author}
           <button onClick={toggleExpanded}>View</button>
         </div>
       </div>
@@ -31,9 +35,11 @@ const Blog = ({ blog, likeBlog }) => {
       </div>
       <div className="blogItem">{blog.url}</div>
       <div className="blogItem">
-        {blog.likes} <button onClick={addLike}>Like</button>
+        {blog.likes} <button onClick={handleAddLike}>Like</button>
       </div>
       <div className="blogItem">{blog.author}</div>
+      {user.username === blog.user.username && <button onClick={handleDelete}>Delete</button>}
+      
     </div>
   );
 };
