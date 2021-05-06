@@ -1,7 +1,6 @@
-import React from "react";
+import React from "react"
 
 const Logout = ({ name }) => {
-
   const handleLogout = () => {
     window.localStorage.removeItem("loggedUser")
   }
@@ -13,7 +12,7 @@ const Logout = ({ name }) => {
       </form>
       <br></br>
     </div>
-  );
-};
+  )
+}
 
-export default Logout;
+export default Logout

@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react"
 
-const Input = ( {title, type, value, setInput}) => {
+const Input = ({ title, type, value, setInput }) => {
   return (
     <div>
-      <label>{ title }</label>
-          <input
-            type={type}
-            value={value}
-            onChange={({ target }) => setInput(target.value)}
-            name={title}
-          />
+      <label>{title}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={({ target }) => setInput(target.value)}
+        name={title}
+      />
     </div>
   )
 }
