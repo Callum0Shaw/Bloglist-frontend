@@ -49,12 +49,20 @@ const App = () => {
   const postBlog = async (blog) => {
     blogFormRef.current.toggleVisibility();
     const submittedBlog = await blogService.postBlog(blog);
-    console.log(submittedBlog);
     setMessage(`Blog: ${blog.title} by ${blog.author} added`);
     setTimeout(() => {
       setMessage(null);
     }, 5000);
     setBlogs(blogs.concat(blog));
+  };
+
+  const likeBlog = async (blog) => {
+    const likedBlog = await blogService.likeBlog(blog);
+    setMessage(`You have liked: ${blog.title} by ${blog.author}`);
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+    setBlogs(blogs.map((blog) => blog.id === likedBlog.id ? {...blog, likes: blog.likes + 1} : blog))
   };
 
   if (user === null) {
@@ -77,7 +85,7 @@ const App = () => {
       </Togglable>
 
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
       ))}
     </div>
   );

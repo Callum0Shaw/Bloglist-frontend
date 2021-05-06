@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import "./blogs.css"
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, likeBlog }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const addLike = () => {
+    likeBlog(blog)
+  }
 
   if (!isExpanded) {
     return (
@@ -27,7 +31,7 @@ const Blog = ({ blog }) => {
       </div>
       <div className="blogItem">{blog.url}</div>
       <div className="blogItem">
-        {blog.likes} <button>Like</button>
+        {blog.likes} <button onClick={addLike}>Like</button>
       </div>
       <div className="blogItem">{blog.author}</div>
     </div>
