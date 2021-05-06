@@ -1,0 +1,9 @@
+.notification {
+  padding: 2em, 5em;
+  background-color: rgb(180, 43, 9);
+  color: aliceblue;
+  border-radius: .3rem;
+  width: 30vw;
+  margin: 2rem auto;
+  text-align: center;
+}
