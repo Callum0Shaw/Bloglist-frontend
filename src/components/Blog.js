@@ -20,7 +20,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
 
   if (!isExpanded) {
     return (
-      <div className="minimisedBlog">
+      <div className="blog">
         <div className="blogItem">
           {blog.title} by {blog.author}
           <button onClick={toggleExpanded}>View</button>
@@ -30,7 +30,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
   }
 
   return (
-    <div className="expandedBlog">
+    <div className="blog">
       <div className="blogItem">
         {blog.title}
         <button onClick={toggleExpanded}>Hide</button>
@@ -47,7 +47,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
   )
 }
 
-Blog.PropTypes = {
+Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   likeBlog: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
