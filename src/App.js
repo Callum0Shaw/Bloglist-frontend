@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import Blog from "./components/Blog"
 import LoginForm from "./components/LoginForm"
 import Logout from "./components/Logout"
-import AddBlog from "./components/BlogForm"
+import BlogForm from "./components/BlogForm"
 import Notification from "./components/Notification"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
@@ -73,9 +73,9 @@ const App = () => {
     return sortedBlogs
   }
 
-  const deleteBlog = async (blog) => {
+  const deleteBlog = (blog) => {
     try {
-      const deletedBlog = await blogService.deleteBlog(blog)
+      (async () => await blogService.deleteBlog(blog))()
       setMessage(`You have deleted:  ${blog.title} by ${blog.author}`)
       setTimeout(() => {
         setMessage(null)
@@ -105,7 +105,7 @@ const App = () => {
       <Notification message={message} />
       <Logout name={user.name} />
       <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-        <AddBlog postBlog={postBlog} />
+        <BlogForm postBlog={postBlog} />
       </Togglable>
 
       {blogs.map((blog) => (

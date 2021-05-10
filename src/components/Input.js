@@ -5,6 +5,7 @@ const Input = ({ title, type, value, setInput }) => {
     <div>
       <label>{title}</label>
       <input
+        id={title}
         type={type}
         value={value}
         onChange={({ target }) => setInput(target.value)}
