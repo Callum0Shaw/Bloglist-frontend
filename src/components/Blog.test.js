@@ -37,10 +37,30 @@ test("Expanded blog show correct content", () => {
   )
 
   const showButton = component.getByText("View")
-
   fireEvent.click(showButton)
 
   expect(component.container).toHaveTextContent(
-    blog.title, blog.author, blog.url, blog.likes
+    blog.title,
+    blog.author,
+    blog.url,
+    blog.likes
   )
+})
+
+test("Like button correctly processes multiple clicks", () => {
+  const component = render(
+    <Blog blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog} user={user} />
+  )
+
+  const showButton = component.getByText("View")
+  fireEvent.click(showButton)
+
+  const likeButton = component.getByText("Like")
+
+  const calls = 5
+
+  for (let i = 0; i < calls; i++) {
+    fireEvent.click(likeButton)
+  }
+  expect(likeBlog.mock.calls.length).toBe(calls)
 })
