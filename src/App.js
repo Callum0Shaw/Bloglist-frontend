@@ -32,9 +32,9 @@ const App = () => {
     }
   }, [])
 
-  const loginUser = async (user) => {
+  const loginUser = async (loginDetails) => {
     try {
-      const currentUser = await loginService.login(user)
+      const currentUser = await loginService.login(loginDetails)
       window.localStorage.setItem("loggedUser", JSON.stringify(currentUser))
       blogService.setToken(currentUser.token)
       setUser(currentUser)
