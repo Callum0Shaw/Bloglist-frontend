@@ -23,7 +23,9 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
       <div className="blog">
         <div className="blogItem">
           {blog.title} by {blog.author}
-          <button onClick={toggleExpanded}>View</button>
+          <button id="showBlog" onClick={toggleExpanded}>
+            View
+          </button>
         </div>
       </div>
     );
@@ -33,11 +35,13 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
     <div className="blog">
       <div className="blogItem">
         {blog.title}
-        <button onClick={toggleExpanded}>Hide</button>
+        <button id="hideBlog" onClick={toggleExpanded}>
+          Hide
+        </button>
       </div>
       <div className="blogItem">{blog.url}</div>
       <div className="blogItem">
-        {blog.likes} <button onClick={handleAddLike}>Like</button>
+        {blog.likes} <button id="likeBlog" onClick={handleAddLike}>Like</button>
       </div>
       <div className="blogItem">{blog.author}</div>
       {user.username === blog.user.username && (

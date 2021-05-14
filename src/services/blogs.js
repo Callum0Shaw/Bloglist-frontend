@@ -28,7 +28,6 @@ const likeBlog = async (blog) => {
     title: blog.title,
     url: blog.url,
   };
-  console.log(newBlog);
   const response = await axios.put(`${baseUrl}/${blog.id}`, newBlog, config);
 
   return response.data;

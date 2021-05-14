@@ -43,5 +43,15 @@ describe("Blog app", function () {
       cy.contains("Blog: Test Blog by Test Author added");
       cy.get(".blog").contains("Test Blog by Test Author");
     });
+    it("A blog can be liked", function () {
+      cy.postBlog({
+        title: "Test Title",
+        Author: "Test Author",
+        url: "Test Url",
+      });
+      cy.get("#showBlog").click();
+      cy.get("#likeBlog").click();
+      cy.contains("1");
+    });
   });
 });
