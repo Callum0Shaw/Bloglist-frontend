@@ -1,22 +1,22 @@
-import React, { useState } from "react"
-import PropTypes from "prop-types"
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-import "./blogs.css"
+import "./blogs.css";
 
 const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
-    setIsExpanded(!isExpanded)
-  }
+    setIsExpanded(!isExpanded);
+  };
 
   const handleAddLike = () => {
-    likeBlog(blog)
-  }
+    likeBlog(blog);
+  };
 
   const handleDelete = () => {
-    deleteBlog(blog)
-  }
+    deleteBlog(blog);
+  };
 
   if (!isExpanded) {
     return (
@@ -26,7 +26,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
           <button onClick={toggleExpanded}>View</button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -44,14 +44,14 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
         <button onClick={handleDelete}>Delete</button>
       )}
     </div>
-  )
-}
+  );
+};
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   likeBlog: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-}
+};
 
-export default Blog
+export default Blog;

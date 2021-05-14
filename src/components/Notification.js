@@ -1,5 +1,5 @@
-import React from "react"
-import "./notification.css"
+import React from "react";
+import "./notification.css";
 
 const Notification = ({ message }) => {
   if (message) {
@@ -7,9 +7,9 @@ const Notification = ({ message }) => {
       <div className="notification">
         <h4>{message}</h4>
       </div>
-    )
+    );
   }
-  return null
-}
+  return null;
+};
 
-export default Notification
+export default Notification;

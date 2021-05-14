@@ -1,12 +1,12 @@
-import axios from "axios"
+import axios from "axios";
 
-const baseUrl = "/api/login"
+const baseUrl = "/api/login";
 
 const login = async (credentials) => {
-  const response = await axios.post(baseUrl, credentials)
-  return response.data
-}
+  const response = await axios.post(baseUrl, credentials);
+  return response.data;
+};
 
-const toExport = { login }
+const toExport = { login };
 
-export default toExport
+export default toExport;

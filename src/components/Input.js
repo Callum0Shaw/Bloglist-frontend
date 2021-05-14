@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const Input = ({ title, type, value, setInput }) => {
   return (
@@ -12,7 +12,7 @@ const Input = ({ title, type, value, setInput }) => {
         name={title}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

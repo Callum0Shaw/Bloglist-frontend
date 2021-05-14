@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
 const Logout = ({ name }) => {
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedUser")
-  }
+    window.localStorage.removeItem("loggedUser");
+  };
   return (
     <div>
       <form onSubmit={handleLogout}>
@@ -12,7 +12,7 @@ const Logout = ({ name }) => {
       </form>
       <br></br>
     </div>
-  )
-}
+  );
+};
 
-export default Logout
+export default Logout;

@@ -1,32 +1,36 @@
-import React, { useState, useImperativeHandle } from "react"
+import React, { useState, useImperativeHandle } from "react";
 
 // eslint-disable-next-line react/display-name
 const Togglable = React.forwardRef((props, ref) => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
-  const hideWhenVisible = { display: visible ? "none" : "" }
-  const showWhenVisible = { display: visible ? "" : "none" }
+  const hideWhenVisible = { display: visible ? "none" : "" };
+  const showWhenVisible = { display: visible ? "" : "none" };
 
   const toggleVisibility = () => {
-    setVisible(!visible)
-  }
+    setVisible(!visible);
+  };
 
   useImperativeHandle(ref, () => {
-    return { toggleVisibility }
-  })
+    return { toggleVisibility };
+  });
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+        <button id="showToggle" onClick={toggleVisibility}>
+          {props.buttonLabel}
+        </button>
       </div>
       <div style={showWhenVisible}>
         {props.children}
-        <button onClick={toggleVisibility}>Cancel</button>
+        <button id="hideToggle" onClick={toggleVisibility}>
+          Cancel
+        </button>
       </div>
     </div>
-  )
-})
+  );
+});
 
-Togglable.displayName = "Togglable"
+Togglable.displayName = "Togglable";
 
-export default Togglable
+export default Togglable;
