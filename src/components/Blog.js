@@ -20,34 +20,39 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
 
   if (!isExpanded) {
     return (
-      <div className="blog">
+      <li className="blog">
         <div className="blogItem">
           {blog.title} by {blog.author}
-          <button id="showBlog" onClick={toggleExpanded}>
+          <button className="showBlog" onClick={toggleExpanded}>
             View
           </button>
         </div>
-      </div>
+      </li>
     );
   }
 
   return (
-    <div className="blog">
+    <li className="blog">
       <div className="blogItem">
         {blog.title}
-        <button id="hideBlog" onClick={toggleExpanded}>
+        <button className="hideBlog" onClick={toggleExpanded}>
           Hide
         </button>
       </div>
       <div className="blogItem">{blog.url}</div>
       <div className="blogItem">
-        {blog.likes} <button id="likeBlog" onClick={handleAddLike}>Like</button>
+        {blog.likes}{" "}
+        <button className="likeBlog" onClick={handleAddLike}>
+          Like
+        </button>
       </div>
       <div className="blogItem">{blog.author}</div>
       {user.username === blog.user.username && (
-        <button id="deleteBlog" onClick={handleDelete}>Delete</button>
+        <button className="deleteBlog" onClick={handleDelete}>
+          Delete
+        </button>
       )}
-    </div>
+    </li>
   );
 };
 

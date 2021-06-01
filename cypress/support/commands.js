@@ -51,3 +51,24 @@ Cypress.Commands.add("postBlog", ({ title, author, url }) => {
   });
   cy.visit("http://localhost:3000");
 });
+
+Cypress.Commands.add("postFiveBlogs", () => {
+  for (let i = 0; i < 5; i++) {
+    cy.request({
+      method: "POST",
+      url: "http://localhost:3001/api/blogs",
+      body: {
+        title: `Title ${i}`,
+        author: `Author ${i}`,
+        url: `Url ${i}`,
+      },
+      headers: {
+        Authorization: `bearer ${
+          JSON.parse(localStorage.getItem("loggedUser")).token
+        }`,
+      },
+    });
+  }
+
+  cy.visit("http://localhost:3000");
+});

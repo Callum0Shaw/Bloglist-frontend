@@ -49,8 +49,8 @@ describe("Blog app", function () {
         Author: "Test Author",
         url: "Test Url",
       });
-      cy.get("#showBlog").click();
-      cy.get("#likeBlog").click();
+      cy.get(".showBlog").click();
+      cy.get(".likeBlog").click();
       cy.contains("1");
     });
     it("A user can delete their blogs", function () {
@@ -59,9 +59,12 @@ describe("Blog app", function () {
         Author: "Test Author",
         url: "Test Url",
       });
-      cy.get("#showBlog").click();
-      cy.get("#deleteBlog").click();
+      cy.get(".showBlog").click();
+      cy.get(".deleteBlog").click();
       cy.get(".blog").should("not.exist");
     });
+    // it.only("Blogs are ordered by number of likes", function () {
+    //   cy.postFiveBlogs();
+    // });
   });
 });
